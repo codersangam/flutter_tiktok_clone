@@ -54,8 +54,11 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 50,
               width: MediaQuery.of(context).size.width - 40,
               child: ElevatedButton(
-                onPressed: () {},
-                child: 'Register'.text.lg.bold.make(),
+                onPressed: () {
+                  authController.loginUser(
+                      emailController.text, passwordController.text);
+                },
+                child: 'Login'.text.lg.bold.make(),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(primayColor),
                 ),

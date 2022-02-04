@@ -15,6 +15,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +31,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 .fontWeight(FontWeight.w900)
                 .make(),
             'Register'.text.size(25).fontWeight(FontWeight.w700).make(),
+            25.heightBox,
+            VStack([
+              VxCircle(
+                radius: 100,
+                backgroundImage: const DecorationImage(
+                  fit: BoxFit.cover,
+                  // image: MemoryImage(_image!),
+                  image: AssetImage('assets/images/default_image.png'),
+                ),
+                child: Align(
+                  child: IconButton(
+                    onPressed: () => authController.pickedImage(),
+                    icon: const Icon(Icons.add_a_photo),
+                  ),
+                  alignment: Alignment.bottomRight,
+                ),
+              )
+            ]),
             25.heightBox,
             Container(
               width: MediaQuery.of(context).size.width,
@@ -64,7 +83,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               height: 50,
               width: MediaQuery.of(context).size.width - 40,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => authController.registerUser(
+                    usernameController.text,
+                    emailController.text,
+                    passwordController.text,
+                    authController.profileImage),
                 child: 'Register'.text.lg.bold.make(),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(primayColor),
