@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:tiktok_clone/contants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,12 +9,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int pageIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: 'Home Screen'.text.make(),
-      ),
-    );
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (value) {
+            setState(() {
+              pageIndex = value;
+            });
+          },
+          currentIndex: pageIndex,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: backgroundColor,
+          selectedItemColor: primayColor,
+          unselectedItemColor: Colors.white,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add),
+              label: 'Post',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.message),
+              label: 'Message',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+        ),
+        body: pages[pageIndex]);
   }
 }
