@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/contants.dart';
 import 'package:tiktok_clone/controllers/video_controller.dart';
+import 'package:tiktok_clone/views/screens/comments_screen.dart';
 import 'package:tiktok_clone/views/widgets/video_player_item.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:get/get.dart';
@@ -127,10 +129,14 @@ class _FeedScreenState extends State<FeedScreen> {
                                 Column(
                                   children: [
                                     InkWell(
-                                      onTap: () {},
-                                      child: const Icon(
+                                      onTap: () => videoController
+                                          .likeVideo(data.videoId.toString()),
+                                      child: Icon(
                                         Icons.favorite,
-                                        color: Colors.red,
+                                        color: data.likes!.contains(
+                                                authController.user!.uid)
+                                            ? Colors.red
+                                            : Colors.white,
                                         size: 40,
                                       ),
                                     ),
@@ -141,7 +147,15 @@ class _FeedScreenState extends State<FeedScreen> {
                                 Column(
                                   children: [
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CommentsScreen(),
+                                          ),
+                                        );
+                                      },
                                       child: const Icon(
                                         Icons.message,
                                         size: 40,
