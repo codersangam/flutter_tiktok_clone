@@ -15,6 +15,8 @@ class AuthController extends GetxController {
   // Check user logged In or not?
   late Rx<User?> _user;
 
+  User? get user => _user.value;
+
   @override
   void onReady() {
     super.onReady();
