@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tiktok_clone/contants.dart';
+import 'package:tiktok_clone/controllers/comment_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class CommentsScreen extends StatefulWidget {
-  const CommentsScreen({Key? key}) : super(key: key);
+  const CommentsScreen({Key? key, required this.id}) : super(key: key);
+
+  final String id;
 
   @override
   _CommentsScreenState createState() => _CommentsScreenState();
 }
 
 class _CommentsScreenState extends State<CommentsScreen> {
-  TextEditingController commentController = TextEditingController();
+  final TextEditingController _commentController = TextEditingController();
+  CommentController commentController = Get.put(CommentController());
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    commentController.updateVideoId(widget.id);
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
@@ -22,46 +29,56 @@ class _CommentsScreenState extends State<CommentsScreen> {
           child: Column(
             children: [
               Expanded(
-                child: ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: VxCircle(
-                        backgroundImage: const DecorationImage(
-                          image: NetworkImage(
-                              'https://images.unsplash.com/photo-1645963053554-30221fce7e6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'),
+                child: Obx(() {
+                  return ListView.builder(
+                    itemCount: commentController.comment.length,
+                    itemBuilder: (context, index) {
+                      final data = commentController.comment[index];
+                      return ListTile(
+                        leading: VxCircle(
+                          radius: 40,
+                          backgroundImage: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              data.profileImage.toString(),
+                            ),
+                          ),
                         ),
-                      ),
-                      title: Row(
-                        children: [
-                          'username'
-                              .text
-                              .size(20)
-                              .bold
-                              .color(primayColor!)
-                              .make(),
-                          'comments'.text.size(20).color(Vx.white).make(),
-                        ],
-                      ),
-                      subtitle: Row(
-                        children: [
-                          'date'.text.sm.make(),
-                          10.widthBox,
-                          '0 likes'.text.sm.make(),
-                        ],
-                      ),
-                      trailing: const Icon(
-                        Icons.favorite_outline,
-                        size: 20,
-                      ),
-                    );
-                  },
-                ),
+                        title: Row(
+                          children: [
+                            '${data.userName} '
+                                .text
+                                .size(20)
+                                .bold
+                                .color(primayColor!)
+                                .make(),
+                            data.comments!.text.size(20).color(Vx.white).make(),
+                          ],
+                        ),
+                        subtitle: Row(
+                          children: [
+                            timeago
+                                .format(data.commentDate!.toLocal())
+                                .text
+                                .sm
+                                .make(),
+                            10.widthBox,
+                            '${data.likes!.length} likes'.text.sm.make(),
+                          ],
+                        ),
+                        trailing: const Icon(
+                          Icons.favorite_outline,
+                          size: 20,
+                        ),
+                      );
+                    },
+                  );
+                }),
               ),
               const Divider(),
               ListTile(
                 title: TextFormField(
-                  controller: commentController,
+                  controller: _commentController,
                   style: const TextStyle(fontSize: 16, color: Colors.white),
                   decoration: const InputDecoration(
                     labelText: 'Comment',
@@ -78,7 +95,9 @@ class _CommentsScreenState extends State<CommentsScreen> {
                   ),
                 ),
                 trailing: TextButton(
-                    onPressed: () {}, child: 'Send'.text.size(16).make()),
+                    onPressed: () =>
+                        commentController.postComment(_commentController.text),
+                    child: 'Send'.text.size(16).color(primayColor!).make()),
               ),
             ],
           ),

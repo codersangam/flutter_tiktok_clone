@@ -7,6 +7,7 @@ class CommentModel {
   String? uId;
   String? userName;
   String? profileImage;
+  List? likes;
 
   CommentModel(
       {this.commentId,
@@ -14,7 +15,8 @@ class CommentModel {
       this.commentDate,
       this.uId,
       this.userName,
-      this.profileImage});
+      this.profileImage,
+      this.likes});
 
   Map<String, dynamic> toJson() => {
         'commentId': commentId,
@@ -23,6 +25,7 @@ class CommentModel {
         'uId': uId,
         'userName': userName,
         'profileImage': profileImage,
+        'likes': likes
       };
 
   static CommentModel fromSnap(DocumentSnapshot documentSnapshot) {
@@ -30,10 +33,11 @@ class CommentModel {
     return CommentModel(
       commentId: snap['commentId'],
       comments: snap['comments'],
-      commentDate: snap['commentDate'],
+      commentDate: snap['commentDate'].toDate(),
       uId: snap['uId'],
       userName: snap['userName'],
       profileImage: snap['profileImage'],
+      likes: snap['likes'],
     );
   }
 }

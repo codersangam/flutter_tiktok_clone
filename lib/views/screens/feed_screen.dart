@@ -152,7 +152,9 @@ class _FeedScreenState extends State<FeedScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const CommentsScreen(),
+                                                CommentsScreen(
+                                                    id: data.videoId
+                                                        .toString()),
                                           ),
                                         );
                                       },
