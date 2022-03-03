@@ -13,7 +13,7 @@ class _MessageScreenState extends State<MessageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: 'MessageScree'.text.make(),
+        child: 'Message Screen'.text.make(),
       ),
     );
   }

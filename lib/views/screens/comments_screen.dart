@@ -66,9 +66,16 @@ class _CommentsScreenState extends State<CommentsScreen> {
                             '${data.likes!.length} likes'.text.sm.make(),
                           ],
                         ),
-                        trailing: const Icon(
-                          Icons.favorite_outline,
-                          size: 20,
+                        trailing: InkWell(
+                          onTap: () => commentController
+                              .likeComment(data.commentId.toString()),
+                          child: data.likes!.contains(authController.user!.uid)
+                              ? const Icon(Icons.favorite,
+                                  size: 20, color: Colors.red)
+                              : const Icon(
+                                  Icons.favorite_outline,
+                                  size: 20,
+                                ),
                         ),
                       );
                     },

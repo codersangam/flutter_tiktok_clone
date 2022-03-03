@@ -67,4 +67,34 @@ class CommentController extends GetxController {
       Get.snackbar('Error: ', e.toString());
     }
   }
+
+  likeComment(String id) async {
+    var uId = authController.user!.uid;
+    DocumentSnapshot documentSnapshot = await cloudFirestore
+        .collection('Videos')
+        .doc(_videoId)
+        .collection('Comments')
+        .doc(id)
+        .get();
+
+    if ((documentSnapshot.data() as dynamic)['likes'].contains(uId)) {
+      cloudFirestore
+          .collection('Videos')
+          .doc(_videoId)
+          .collection('Comments')
+          .doc(id)
+          .update({
+        'likes': FieldValue.arrayRemove([uId])
+      });
+    } else {
+      cloudFirestore
+          .collection('Videos')
+          .doc(_videoId)
+          .collection('Comments')
+          .doc(id)
+          .update({
+        'likes': FieldValue.arrayUnion([uId])
+      });
+    }
+  }
 }
