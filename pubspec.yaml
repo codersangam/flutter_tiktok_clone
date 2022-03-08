@@ -45,6 +45,7 @@ dependencies:
   video_player: ^2.2.18
   cached_network_image: ^3.2.0
   velocity_x: ^3.4.0
+  flutter_svg: ^1.0.3
   
 
 dev_dependencies:
