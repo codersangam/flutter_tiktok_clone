@@ -10,12 +10,14 @@ import 'package:tiktok_clone/views/screens/profile_screen.dart';
 import 'package:tiktok_clone/views/screens/search_screen.dart';
 
 //
-const pages = [
-  FeedScreen(),
-  SearchScreen(),
-  PostScreen(),
-  MessageScreen(),
-  ProfileScreen(),
+List pages = [
+  const FeedScreen(),
+  const SearchScreen(),
+  const PostScreen(),
+  const MessageScreen(),
+  ProfileScreen(
+    uId: authController.user!.uid,
+  ),
 ];
 
 // *Colors
