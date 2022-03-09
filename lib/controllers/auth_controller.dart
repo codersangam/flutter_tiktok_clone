@@ -17,11 +17,15 @@ class AuthController extends GetxController {
 
   User? get user => _user.value;
 
+  var isLoading = false.obs;
+
+  var isPasswordHidden = true.obs;
+
   @override
   void onReady() {
     super.onReady();
     _user = Rx<User?>(firebaseAuth.currentUser);
-    _user.bindStream(firebaseAuth.authStateChanges());
+    _user.bindStream(firebaseAuth.userChanges());
     ever(_user, _setInitialScreen);
   }
 
@@ -62,6 +66,7 @@ class AuthController extends GetxController {
   // Register User
   void registerUser(
       String userName, String email, String password, File? image) async {
+    isLoading.value = true;
     try {
       if (userName.isNotEmpty &&
           email.isNotEmpty &&
@@ -94,14 +99,17 @@ class AuthController extends GetxController {
         e.toString(),
       );
     }
+    isLoading.value = false;
   }
 
   // Login User
   void loginUser(String email, String password) async {
+    isLoading.value = true;
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
         await firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
+        isLoading.value = false;
       } else {
         Get.snackbar(
           'Required',
@@ -114,6 +122,7 @@ class AuthController extends GetxController {
         e.toString(),
       );
     }
+    isLoading.value = false;
   }
 
   void signOut() async {

@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/contants.dart';
 import 'package:tiktok_clone/controllers/auth_controller.dart';
-import 'package:tiktok_clone/views/screens/register_screen.dart';
 import 'package:get/get.dart';
 
 void main() async {
@@ -20,10 +19,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'TikTok Clone',
+      title: 'Cryptogram',
       theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: backgroundColor, primaryColor: primayColor),
-      home: const RegisterScreen(),
+      home: Center(
+        child: CircularProgressIndicator(
+          color: primayColor,
+        ),
+      ),
     );
   }
 }
