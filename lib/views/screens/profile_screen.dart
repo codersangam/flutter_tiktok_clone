@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: () {},
               icon: const Icon(Icons.person_add_alt_1_outlined),
             ),
-            title: 'Tuk Tuk'.text.make(),
+            title: 'Cryptogram'.text.make(),
             actions: [
               Row(
                 children: [
@@ -79,10 +79,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       height: 100,
                                       fit: BoxFit.cover,
                                       imageUrl: controller.user['profileImage'],
-                                      progressIndicatorBuilder: (context, url,
-                                              downloadProgress) =>
-                                          CircularProgressIndicator(
-                                              value: downloadProgress.progress),
+                                      progressIndicatorBuilder:
+                                          (context, url, downloadProgress) =>
+                                              CircularProgressIndicator(
+                                        value: downloadProgress.progress,
+                                        color: primayColor,
+                                      ),
                                       errorWidget: (context, url, error) =>
                                           const Icon(Icons.error),
                                     ),

@@ -7,13 +7,17 @@ class CustomTextField extends StatelessWidget {
       required this.labelText,
       required this.controller,
       required this.icon,
-      this.isPassword = false})
+      this.isPassword = false,
+      this.passwordIcon,
+      this.onTap})
       : super(key: key);
 
   final String labelText;
   final bool isPassword;
   final TextEditingController controller;
   final IconData icon;
+  final IconData? passwordIcon;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,13 @@ class CustomTextField extends StatelessWidget {
         prefixIcon: Icon(
           icon,
           color: primayColor,
+        ),
+        suffixIcon: InkWell(
+          onTap: onTap,
+          child: Icon(
+            passwordIcon,
+            color: primayColor,
+          ),
         ),
         labelStyle: TextStyle(fontSize: 20, color: primayColor),
         enabledBorder: OutlineInputBorder(
