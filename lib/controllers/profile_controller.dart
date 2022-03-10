@@ -27,7 +27,7 @@ class ProfileController extends GetxController {
 
     DocumentSnapshot userDoc =
         await cloudFirestore.collection('Users').doc(_uId.value).get();
-    final userData = userDoc.data()! as dynamic;
+    final userData = userDoc.data() as dynamic;
     String userName = userData['userName'];
     String profileImage = userData['profileImage'];
     int? follower = 0;

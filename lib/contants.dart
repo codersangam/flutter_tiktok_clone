@@ -25,6 +25,7 @@ const backgroundColor = Colors.black;
 var buttonColor = Colors.red[400];
 const borderColor = Colors.grey;
 var primayColor = Colors.red[400];
+var secondaryColor = const Color.fromRGBO(38, 38, 38, 1);
 
 // *Firebase Instance
 var firebaseAuth = FirebaseAuth.instance;

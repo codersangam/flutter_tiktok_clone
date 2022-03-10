@@ -6,10 +6,11 @@ import 'package:tiktok_clone/models/video_model.dart';
 import 'package:video_compress/video_compress.dart';
 
 class UploadVideoController extends GetxController {
+  var isLoading = false.obs;
   // Compress Video
   _compressedVideo(String videoPath) async {
     final compressedVideo = await VideoCompress.compressVideo(videoPath,
-        quality: VideoQuality.MediumQuality);
+        quality: VideoQuality.LowQuality);
     return compressedVideo!.file;
   }
 
@@ -38,6 +39,7 @@ class UploadVideoController extends GetxController {
   }
 
   uploadVideo(String songName, String caption, String videoPath) async {
+    isLoading.value = true;
     try {
       // get userdata
       String uId = firebaseAuth.currentUser!.uid;
@@ -66,6 +68,7 @@ class UploadVideoController extends GetxController {
         songName: songName,
         caption: caption,
         thumbnail: thumbnailUrl,
+        videoPostDate: DateTime.now(),
       );
       await cloudFirestore
           .collection('Videos')
@@ -75,5 +78,6 @@ class UploadVideoController extends GetxController {
     } catch (e) {
       Get.snackbar('Error: ', e.toString());
     }
+    isLoading.value = false;
   }
 }
