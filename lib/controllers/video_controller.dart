@@ -11,7 +11,11 @@ class VideoController extends GetxController {
   void onInit() {
     super.onInit();
     _videoList.bindStream(
-      cloudFirestore.collection('Videos').snapshots().map(
+      cloudFirestore
+          .collection('Videos')
+          .orderBy('videoPostDate', descending: true)
+          .snapshots()
+          .map(
         (QuerySnapshot querySnapshot) {
           List<VideoModel> returnValue = [];
           for (var element in querySnapshot.docs) {

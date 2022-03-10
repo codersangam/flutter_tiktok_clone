@@ -46,6 +46,7 @@ dependencies:
   cached_network_image: ^3.2.0
   velocity_x: ^3.4.0
   flutter_svg: ^1.0.3
+  google_sign_in: ^5.2.4
   
 
 dev_dependencies:

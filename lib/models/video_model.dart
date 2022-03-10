@@ -12,6 +12,7 @@ class VideoModel {
   String? songName;
   String? caption;
   String? thumbnail;
+  DateTime? videoPostDate;
 
   VideoModel(
       {this.uId,
@@ -24,7 +25,8 @@ class VideoModel {
       this.shareCount,
       this.songName,
       this.caption,
-      this.thumbnail});
+      this.thumbnail,
+      this.videoPostDate});
 
   Map<String, dynamic> toJson() => {
         "uId": uId,
@@ -37,7 +39,8 @@ class VideoModel {
         "shareCount": shareCount,
         "songName": songName,
         "caption": caption,
-        "thumbnail": thumbnail
+        "thumbnail": thumbnail,
+        "videoPostDate": videoPostDate,
       };
 
   static VideoModel fromSnap(DocumentSnapshot snap) {
@@ -54,6 +57,7 @@ class VideoModel {
       songName: snapshot["songName"],
       caption: snapshot["caption"],
       thumbnail: snapshot["thumbnail"],
+      videoPostDate: snapshot["videoPostDate"].toDate(),
     );
   }
 }

@@ -48,60 +48,69 @@ class _PostConfirmScreenState extends State<PostConfirmScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            30.heightBox,
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 1.5,
-              width: MediaQuery.of(context).size.width,
-              child: VideoPlayer(controller),
-            ),
-            30.heightBox,
-            SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: CustomTextField(
-                        labelText: 'Song Name',
-                        controller: songController,
-                        icon: Icons.music_note),
-                  ),
-                  10.heightBox,
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: CustomTextField(
-                        labelText: 'Caption',
-                        controller: captionController,
-                        icon: Icons.closed_caption),
-                  ),
-                  30.heightBox,
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 20,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () => uploadVideoController.uploadVideo(
-                          songController.text,
-                          captionController.text,
-                          widget.videoPath),
-                      child: 'Publish'.text.lg.bold.make(),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(primayColor),
-                      ),
-                    ),
-                  )
-                ],
+    return Obx(() {
+      return Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              30.heightBox,
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 1.5,
+                width: MediaQuery.of(context).size.width,
+                child: VideoPlayer(controller),
               ),
-            )
-          ],
+              30.heightBox,
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      width: MediaQuery.of(context).size.width - 20,
+                      child: CustomTextField(
+                          labelText: 'Song Name',
+                          controller: songController,
+                          icon: Icons.music_note),
+                    ),
+                    10.heightBox,
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      width: MediaQuery.of(context).size.width - 20,
+                      child: CustomTextField(
+                          labelText: 'Caption',
+                          controller: captionController,
+                          icon: Icons.closed_caption),
+                    ),
+                    30.heightBox,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 20,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () => uploadVideoController.uploadVideo(
+                            songController.text,
+                            captionController.text,
+                            widget.videoPath),
+                        child: uploadVideoController.isLoading.value
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : 'Publish'.text.lg.bold.make(),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(primayColor),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

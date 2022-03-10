@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "239645340107-pvqulv0ln45jd485nkhtq82pe1flgncc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tuktuk_clone",
+            "certificate_hash": "977fc9b17821f922ad512bd9e37239855ae88264"
+          }
+        },
+        {
           "client_id": "239645340107-q3eg4hodhnvmrc0otrfu1i8dkijv6bk6.apps.googleusercontent.com",
           "client_type": 3
         }
