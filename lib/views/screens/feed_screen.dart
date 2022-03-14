@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/contants.dart';
 import 'package:tiktok_clone/controllers/video_controller.dart';
@@ -35,8 +36,8 @@ class _FeedScreenState extends State<FeedScreen> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(25),
-                child: Image(
-                  image: NetworkImage(profileImage),
+                child: CachedNetworkImage(
+                  imageUrl: profileImage,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -65,8 +66,8 @@ class _FeedScreenState extends State<FeedScreen> {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(25),
-              child: Image(
-                image: NetworkImage(profileImage),
+              child: CachedNetworkImage(
+                imageUrl: profileImage,
                 fit: BoxFit.cover,
               ),
             ),

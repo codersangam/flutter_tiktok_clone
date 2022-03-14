@@ -123,8 +123,8 @@ class ProfileController extends GetxController {
         'followers',
         (value) => (int.parse(value) - 1).toString(),
       );
-      _user.value.update('isFollowing', (value) => !value);
-      update();
     }
+    _user.value.update('isFollowing', (value) => !value);
+    update();
   }
 }
