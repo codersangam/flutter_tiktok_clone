@@ -115,7 +115,6 @@ class AuthController extends GetxController {
       if (email.isNotEmpty && password.isNotEmpty) {
         await firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
-        isLoading.value = false;
       } else {
         Get.snackbar(
           'Required',

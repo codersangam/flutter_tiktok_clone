@@ -8,16 +8,20 @@ class SearchUserController extends GetxController {
   List<UserModel> get searchedUsers => _searchedUsers.value;
 
   searchUsers(String typedUser) async {
-    _searchedUsers.bindStream(cloudFirestore
-        .collection('Users')
-        .where('userName', isGreaterThanOrEqualTo: typedUser)
-        .snapshots()
-        .map((QuerySnapshot snapshot) {
-      List<UserModel> retValue = [];
-      for (var element in snapshot.docs) {
-        retValue.add(UserModel.fromSnap(element));
-      }
-      return retValue;
-    }));
+    _searchedUsers.bindStream(
+      cloudFirestore
+          .collection('Users')
+          .where('userName', isGreaterThanOrEqualTo: typedUser)
+          .snapshots()
+          .map(
+        (QuerySnapshot snapshot) {
+          List<UserModel> retValue = [];
+          for (var element in snapshot.docs) {
+            retValue.add(UserModel.fromSnap(element));
+          }
+          return retValue;
+        },
+      ),
+    );
   }
 }

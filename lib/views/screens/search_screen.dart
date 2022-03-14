@@ -43,16 +43,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   itemBuilder: (context, index) {
                     UserModel user = searchUserController.searchedUsers[index];
                     return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfileScreen(
-                              uId: user.uId.toString(),
-                            ),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ProfileScreen(
+                            uId: user.uId.toString(),
                           ),
-                        );
-                      },
+                        ),
+                      ),
                       child: ListTile(
                         leading: VxCircle(
                           radius: 40,
