@@ -26,7 +26,7 @@ class UserModel {
   }
 
   UserModel.fromMap(Map<String, dynamic> map) {
-    uId = map["uid"];
+    uId = map["uId"];
     userName = map["userName"];
     email = map["email"];
     profileImage = map["profileImage"];

@@ -30,7 +30,7 @@ var secondaryColor = const Color.fromRGBO(38, 38, 38, 1);
 // *Firebase Instance
 var firebaseAuth = FirebaseAuth.instance;
 var firebaseStorage = FirebaseStorage.instance;
-var cloudFirestore = FirebaseFirestore.instance;
+FirebaseFirestore cloudFirestore = FirebaseFirestore.instance;
 
 //* AuthController Instance
 var authController = AuthController.instance;
