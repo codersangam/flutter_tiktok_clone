@@ -1,31 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/contants.dart';
-import 'package:tiktok_clone/helper/firebase_helper.dart';
 import 'package:tiktok_clone/models/user_model.dart';
+import 'package:tiktok_clone/views/screens/messages/chat_room_screen.dart';
 
-class MessageScreen extends StatefulWidget {
-  const MessageScreen({Key? key}) : super(key: key);
+class MessageSearchScreen extends StatefulWidget {
+  const MessageSearchScreen({Key? key, required this.userModel})
+      : super(key: key);
+
+  final UserModel userModel;
 
   @override
-  _MessageScreenState createState() => _MessageScreenState();
+  _MessageSearchScreenState createState() => _MessageSearchScreenState();
 }
 
-class _MessageScreenState extends State<MessageScreen> {
-  Map<String, dynamic>? userMap;
+class _MessageSearchScreenState extends State<MessageSearchScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    User? currentUser = firebaseAuth.currentUser;
-    userModel() async {
-      UserModel? thisUserModel =
-          await FirebaseHelper.getUserModelById(currentUser!.uid);
-      return thisUserModel!.email;
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Search"),
@@ -59,7 +53,7 @@ class _MessageScreenState extends State<MessageScreen> {
                   stream: cloudFirestore
                       .collection("Users")
                       .where("email", isEqualTo: _searchController.text)
-                      .where("email", isNotEqualTo: userModel.toString())
+                      .where("email", isNotEqualTo: widget.userModel.email)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.active) {
@@ -74,6 +68,14 @@ class _MessageScreenState extends State<MessageScreen> {
                           UserModel searchedUser = UserModel.fromMap(userMap);
 
                           return ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ChatRoomScreen(),
+                                ),
+                              );
+                            },
                             leading: CircleAvatar(
                               backgroundImage: NetworkImage(
                                   searchedUser.profileImage.toString()),

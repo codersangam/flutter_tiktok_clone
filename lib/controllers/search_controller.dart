@@ -7,6 +7,8 @@ class SearchUserController extends GetxController {
   final Rx<List<UserModel>> _searchedUsers = Rx<List<UserModel>>([]);
   List<UserModel> get searchedUsers => _searchedUsers.value;
 
+  late Map<String, dynamic> userMap;
+
   searchUsers(String typedUser) async {
     _searchedUsers.bindStream(
       cloudFirestore

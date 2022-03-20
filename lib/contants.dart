@@ -4,17 +4,17 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/controllers/auth_controller.dart';
 import 'package:tiktok_clone/views/screens/feed_screen.dart';
-import 'package:tiktok_clone/views/screens/message_screen.dart';
 import 'package:tiktok_clone/views/screens/post_screen.dart';
 import 'package:tiktok_clone/views/screens/profile_screen.dart';
 import 'package:tiktok_clone/views/screens/search_screen.dart';
+import 'views/screens/messages/message_home_screen.dart';
 
 //
 List pages = [
   const FeedScreen(),
   const SearchScreen(),
   const PostScreen(),
-  const MessageScreen(),
+  const MessageHomeScreen(),
   ProfileScreen(
     uId: authController.user!.uid,
   ),

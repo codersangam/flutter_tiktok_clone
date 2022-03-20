@@ -47,6 +47,7 @@ dependencies:
   velocity_x: ^3.4.0
   flutter_svg: ^1.0.3
   google_sign_in: ^5.2.4
+  image_cropper: ^1.5.0
   
 
 dev_dependencies:
