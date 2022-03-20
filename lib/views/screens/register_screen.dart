@@ -62,8 +62,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           radius: 100,
                           backgroundImage: DecorationImage(
                               fit: BoxFit.cover,
-                              image: FileImage(
-                                  File(authController.selectedImage.value))),
+                              image: FileImage(File(
+                                  authController.selectedImage.toString()))),
                           child: Align(
                             child: IconButton(
                               onPressed: () =>
@@ -119,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         usernameController.text,
                         emailController.text,
                         passwordController.text,
-                        File(authController.selectedImage.value)),
+                        File(authController.selectedImage.toString())),
                     child: authController.isLoading.value
                         ? const Center(
                             child: CircularProgressIndicator(

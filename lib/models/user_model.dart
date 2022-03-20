@@ -24,4 +24,11 @@ class UserModel {
       profileImage: snapshot['profileImage'],
     );
   }
+
+  UserModel.fromMap(Map<String, dynamic> map) {
+    uId = map["uid"];
+    userName = map["userName"];
+    email = map["email"];
+    profileImage = map["profileImage"];
+  }
 }
