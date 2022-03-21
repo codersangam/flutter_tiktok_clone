@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -40,7 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     .make(),
                 25.heightBox,
                 VStack([
-                  authController.selectedImage.value == ""
+                  authController.profileImage.value == ""
                       ? VxCircle(
                           radius: 100,
                           backgroundImage: const DecorationImage(
@@ -61,9 +60,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       : VxCircle(
                           radius: 100,
                           backgroundImage: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: FileImage(File(
-                                  authController.selectedImage.toString()))),
+                            fit: BoxFit.cover,
+                            image: FileImage(
+                              File(authController.profileImage.toString()),
+                            ),
+                          ),
                           child: Align(
                             child: IconButton(
                               onPressed: () =>
@@ -119,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         usernameController.text,
                         emailController.text,
                         passwordController.text,
-                        File(authController.selectedImage.toString())),
+                        File(authController.profileImage.toString())),
                     child: authController.isLoading.value
                         ? const Center(
                             child: CircularProgressIndicator(

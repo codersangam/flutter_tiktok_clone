@@ -70,6 +70,7 @@ class _MessageSearchScreenState extends State<MessageSearchScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Search"),
+        backgroundColor: primayColor,
       ),
       body: SafeArea(
         child: Container(
@@ -80,8 +81,24 @@ class _MessageSearchScreenState extends State<MessageSearchScreen> {
           child: Column(
             children: [
               TextField(
+                cursorColor: primayColor,
                 controller: _searchController,
-                decoration: const InputDecoration(labelText: "Email Address"),
+                decoration: InputDecoration(
+                  labelText: "Email Address",
+                  labelStyle: TextStyle(color: primayColor),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: borderColor,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: borderColor,
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 20,
@@ -90,72 +107,75 @@ class _MessageSearchScreenState extends State<MessageSearchScreen> {
                 onPressed: () {
                   setState(() {});
                 },
-                color: Theme.of(context).colorScheme.secondary,
+                color: primayColor,
                 child: const Text("Search"),
               ),
               const SizedBox(
                 height: 20,
               ),
               StreamBuilder(
-                  stream: cloudFirestore
-                      .collection("Users")
-                      .where("email", isEqualTo: _searchController.text)
-                      .where("email", isNotEqualTo: widget.userModel.email)
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.active) {
-                      if (snapshot.hasData) {
-                        QuerySnapshot dataSnapshot =
-                            snapshot.data as QuerySnapshot;
+                stream: cloudFirestore
+                    .collection("Users")
+                    .where("email", isEqualTo: _searchController.text)
+                    .where("email", isNotEqualTo: widget.userModel.email)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    if (snapshot.hasData) {
+                      QuerySnapshot dataSnapshot =
+                          snapshot.data as QuerySnapshot;
 
-                        if (dataSnapshot.docs.isNotEmpty) {
-                          Map<String, dynamic> userMap = dataSnapshot.docs[0]
-                              .data() as Map<String, dynamic>;
+                      if (dataSnapshot.docs.isNotEmpty) {
+                        Map<String, dynamic> userMap =
+                            dataSnapshot.docs[0].data() as Map<String, dynamic>;
 
-                          UserModel searchedUser = UserModel.fromMap(userMap);
+                        UserModel searchedUser = UserModel.fromMap(userMap);
 
-                          return ListTile(
-                            onTap: () async {
-                              ChatRoomModel? chatRoomModel =
-                                  await getChatroomModel(searchedUser);
-                              if (chatRoomModel != null) {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return ChatRoomScreen(
-                                        targetUser: searchedUser,
-                                        userModel: widget.userModel,
-                                        chatRoomModel: chatRoomModel,
-                                        firebaseUser: widget.firebaseUser,
-                                      );
-                                    },
-                                  ),
-                                );
-                              }
-                            },
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  searchedUser.profileImage.toString()),
-                              backgroundColor: Colors.grey[500],
-                            ),
-                            title: Text(searchedUser.userName.toString()),
-                            subtitle: Text(searchedUser.email!),
-                            trailing: const Icon(Icons.keyboard_arrow_right),
-                          );
-                        } else {
-                          return const Text("No results found!");
-                        }
-                      } else if (snapshot.hasError) {
-                        return const Text("An error occured!");
+                        return ListTile(
+                          onTap: () async {
+                            ChatRoomModel? chatRoomModel =
+                                await getChatroomModel(searchedUser);
+                            if (chatRoomModel != null) {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ChatRoomScreen(
+                                      targetUser: searchedUser,
+                                      userModel: widget.userModel,
+                                      chatRoomModel: chatRoomModel,
+                                      firebaseUser: widget.firebaseUser,
+                                    );
+                                  },
+                                ),
+                              );
+                            }
+                          },
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                searchedUser.profileImage.toString()),
+                            backgroundColor: Colors.grey[500],
+                          ),
+                          title: Text(searchedUser.userName.toString()),
+                          subtitle: Text(searchedUser.email!),
+                          trailing: const Icon(Icons.keyboard_arrow_right),
+                        );
                       } else {
                         return const Text("No results found!");
                       }
+                    } else if (snapshot.hasError) {
+                      return const Text("An error occured!");
                     } else {
-                      return const CircularProgressIndicator();
+                      return const Text("No results found!");
                     }
-                  }),
+                  } else {
+                    return CircularProgressIndicator(
+                      color: primayColor,
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),

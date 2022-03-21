@@ -60,6 +60,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: primayColor,
         title: Row(
           children: [
             CircleAvatar(
@@ -115,10 +116,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                                       decoration: BoxDecoration(
                                         color: (currentMessage.sender ==
                                                 widget.userModel.uId)
-                                            ? Colors.grey
-                                            : Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
+                                            ? primayColor
+                                            : Colors.grey,
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                       child: Text(
@@ -141,8 +140,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                         );
                       }
                     } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: primayColor,
+                        ),
                       );
                     }
                   }),
