@@ -18,6 +18,7 @@ class MessageHomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Message'),
+        backgroundColor: primayColor,
       ),
       body: SafeArea(
         child: StreamBuilder(
@@ -106,14 +107,17 @@ class MessageHomeScreen extends StatelessWidget {
                 );
               }
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Center(
+                child: CircularProgressIndicator(
+                  color: primayColor,
+                ),
               );
             }
           },
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: primayColor,
         onPressed: () async {
           UserModel? thisUserModel =
               await FirebaseHelper.getUserModelById(currentUser!.uid);
@@ -127,7 +131,10 @@ class MessageHomeScreen extends StatelessWidget {
             ),
           );
         },
-        child: const Icon(Icons.search),
+        child: const Icon(
+          Icons.search,
+          color: Colors.white,
+        ),
       ),
     );
   }

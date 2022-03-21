@@ -1,10 +1,9 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-// import 'package:image_cropper/image_cropper.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_clone/contants.dart';
 import 'package:tiktok_clone/models/user_model.dart';
@@ -42,31 +41,24 @@ class AuthController extends GetxController {
   // late Rx<File?> _pickedImage;
   // File? get profileImage => _pickedImage.value;
 
-  var selectedImage = "".obs;
+  Rx<String?> profileImage = "".obs;
 
   // Pick an Image
-  pickImage(ImageSource source) async {
+  void pickImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
 
     if (pickedImage != null) {
-      selectedImage.value = pickedImage.path;
-      // selectedImage = await cropImage(pickedImage);
+      // profileImage.value = pickedImage.path;
+      var croppedImage = await ImageCropper().cropImage(
+          sourcePath: pickedImage.path,
+          aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+          compressQuality: 20);
+      profileImage.value = croppedImage!.path;
       Get.snackbar('Profile Image', 'Avatar selected successfully');
     } else {
       Get.snackbar('Error: ', 'No Image selected');
     }
-    // _pickedImage = Rx<File?>(File(pickedImage!.path));
   }
-
-  // Crop Image
-  // cropImage(file) async {
-  //   var croppedImage = await ImageCropper().cropImage(
-  //       sourcePath: file.path,
-  //       aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-  //       compressQuality: 20);
-
-  //   return croppedImage;
-  // }
 
   // Upload Image to Storage
   _uploadImageToStorage(File image) async {
