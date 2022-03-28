@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -70,9 +71,23 @@ class MessageHomeScreen extends StatelessWidget {
                                   }),
                                 );
                               },
-                              leading: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    targetUser.profileImage.toString()),
+                              leading: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [Colors.grey, Colors.white],
+                                  ),
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        targetUser.profileImage.toString(),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
                               title: Text(targetUser.userName.toString()),
                               subtitle: (chatRoomModel.lastMessage.toString() !=
@@ -86,6 +101,7 @@ class MessageHomeScreen extends StatelessWidget {
                                             .secondary,
                                       ),
                                     ),
+                              trailing: const Icon(Icons.arrow_right),
                             );
                           } else {
                             return Container();

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:tiktok_clone/contants.dart';
 import 'package:tiktok_clone/models/video_model.dart';
 import 'package:video_compress/video_compress.dart';
@@ -10,7 +11,7 @@ class UploadVideoController extends GetxController {
   // Compress Video
   _compressedVideo(String videoPath) async {
     final compressedVideo = await VideoCompress.compressVideo(videoPath,
-        quality: VideoQuality.LowQuality);
+        quality: VideoQuality.MediumQuality);
     return compressedVideo!.file;
   }
 
@@ -26,7 +27,11 @@ class UploadVideoController extends GetxController {
 
   _getThumbnail(String videpPath) async {
     final thumbnail = await VideoCompress.getFileThumbnail(videpPath);
-    return thumbnail;
+    var croppedImage = await ImageCropper().cropImage(
+        sourcePath: thumbnail.path,
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        compressQuality: 20);
+    return croppedImage;
   }
 
   // Upload Thumbnail To Storage
