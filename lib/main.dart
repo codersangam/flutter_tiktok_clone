@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/contants.dart';
 import 'package:tiktok_clone/controllers/auth_controller.dart';
 import 'package:get/get.dart';
+import 'package:tiktok_clone/service_locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp().then((value) {
     Get.put(AuthController());
   });
+  setup();
+
   runApp(const MyApp());
 }
 
